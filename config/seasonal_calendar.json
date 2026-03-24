@@ -1,0 +1,74 @@
+{
+  "japan": [
+    {"event": "Cherry Blossom Season", "start": "03-15", "end": "04-15", "urgency": "high", "content_angle": "timing"},
+    {"event": "Golden Week", "start": "04-29", "end": "05-05", "urgency": "high", "content_angle": "warning"},
+    {"event": "Obon Festival", "start": "08-13", "end": "08-16", "urgency": "medium", "content_angle": "timing"},
+    {"event": "Autumn Leaves", "start": "10-15", "end": "11-30", "urgency": "medium", "content_angle": "timing"},
+    {"event": "New Year", "start": "12-28", "end": "01-05", "urgency": "high", "content_angle": "warning"}
+  ],
+  "greece": [
+    {"event": "Orthodox Easter", "start": "04-01", "end": "04-30", "urgency": "medium", "content_angle": "timing", "note": "date varies yearly"},
+    {"event": "High Season", "start": "07-01", "end": "08-31", "urgency": "high", "content_angle": "warning"},
+    {"event": "Shoulder Season Spring", "start": "04-01", "end": "05-31", "urgency": "medium", "content_angle": "hack"},
+    {"event": "Shoulder Season Fall", "start": "09-01", "end": "10-31", "urgency": "medium", "content_angle": "hack"}
+  ],
+  "italy": [
+    {"event": "August Peak (Ferragosto)", "start": "08-01", "end": "08-31", "urgency": "high", "content_angle": "warning"},
+    {"event": "Christmas Markets", "start": "12-01", "end": "12-25", "urgency": "medium", "content_angle": "timing"},
+    {"event": "Shoulder Season Spring", "start": "04-01", "end": "05-31", "urgency": "medium", "content_angle": "hack"},
+    {"event": "Venice Carnival", "start": "02-01", "end": "02-28", "urgency": "medium", "content_angle": "timing"}
+  ],
+  "korea": [
+    {"event": "Cherry Blossom", "start": "04-01", "end": "04-20", "urgency": "medium", "content_angle": "timing"},
+    {"event": "Monsoon Season", "start": "07-01", "end": "08-31", "urgency": "high", "content_angle": "warning"},
+    {"event": "Chuseok", "start": "09-15", "end": "09-20", "urgency": "high", "content_angle": "warning", "note": "date varies yearly"},
+    {"event": "Autumn Foliage", "start": "10-01", "end": "11-15", "urgency": "medium", "content_angle": "timing"}
+  ],
+  "thailand": [
+    {"event": "Songkran", "start": "04-13", "end": "04-15", "urgency": "high", "content_angle": "timing"},
+    {"event": "High Season", "start": "11-01", "end": "03-31", "urgency": "medium", "content_angle": "hack"},
+    {"event": "Rainy Season", "start": "05-01", "end": "10-31", "urgency": "medium", "content_angle": "warning"},
+    {"event": "Loy Krathong", "start": "11-15", "end": "11-15", "urgency": "medium", "content_angle": "timing", "note": "date varies yearly"}
+  ],
+  "mexico": [
+    {"event": "Dia de los Muertos", "start": "10-31", "end": "11-02", "urgency": "high", "content_angle": "timing"},
+    {"event": "Spring Break Crowds", "start": "03-01", "end": "03-31", "urgency": "high", "content_angle": "warning"},
+    {"event": "Christmas Crowds", "start": "12-15", "end": "01-05", "urgency": "high", "content_angle": "warning"},
+    {"event": "Hurricane Season", "start": "06-01", "end": "11-30", "urgency": "medium", "content_angle": "warning"}
+  ],
+  "portugal": [
+    {"event": "Summer Peak", "start": "07-01", "end": "08-31", "urgency": "medium", "content_angle": "warning"},
+    {"event": "Lisbon Santos Populares", "start": "06-12", "end": "06-13", "urgency": "medium", "content_angle": "timing"},
+    {"event": "Shoulder Season", "start": "04-01", "end": "06-30", "urgency": "medium", "content_angle": "hack"},
+    {"event": "Fall Shoulder", "start": "09-01", "end": "10-31", "urgency": "medium", "content_angle": "hack"}
+  ],
+  "spain": [
+    {"event": "Running of the Bulls", "start": "07-06", "end": "07-14", "urgency": "high", "content_angle": "timing"},
+    {"event": "La Tomatina", "start": "08-27", "end": "08-27", "urgency": "medium", "content_angle": "timing"},
+    {"event": "August Crowds", "start": "08-01", "end": "08-31", "urgency": "high", "content_angle": "warning"},
+    {"event": "Semana Santa", "start": "03-15", "end": "04-15", "urgency": "medium", "content_angle": "timing", "note": "date varies yearly"}
+  ],
+  "france": [
+    {"event": "Bastille Day", "start": "07-14", "end": "07-14", "urgency": "medium", "content_angle": "timing"},
+    {"event": "August Peak", "start": "08-01", "end": "08-31", "urgency": "high", "content_angle": "warning"},
+    {"event": "Christmas Markets", "start": "11-25", "end": "12-25", "urgency": "medium", "content_angle": "timing"},
+    {"event": "SNCF Strike Season", "start": "03-01", "end": "06-30", "urgency": "medium", "content_angle": "warning"}
+  ],
+  "turkey": [
+    {"event": "Ramadan", "start": "03-01", "end": "03-31", "urgency": "medium", "content_angle": "timing", "note": "date varies yearly"},
+    {"event": "Summer Peak", "start": "07-01", "end": "08-31", "urgency": "high", "content_angle": "warning"},
+    {"event": "Tulip Season Istanbul", "start": "04-01", "end": "04-30", "urgency": "medium", "content_angle": "timing"},
+    {"event": "Cappadocia Best Season", "start": "04-01", "end": "05-31", "urgency": "medium", "content_angle": "hack"}
+  ],
+  "poland": [
+    {"event": "Christmas Markets", "start": "12-01", "end": "12-24", "urgency": "medium", "content_angle": "timing"},
+    {"event": "Summer Low Crowds", "start": "06-01", "end": "08-31", "urgency": "medium", "content_angle": "hack"},
+    {"event": "Winter Budget Travel", "start": "11-01", "end": "02-28", "urgency": "medium", "content_angle": "hack"}
+  ],
+  "china": [
+    {"event": "Golden Week", "start": "10-01", "end": "10-07", "urgency": "high", "content_angle": "warning"},
+    {"event": "Chinese New Year", "start": "01-20", "end": "02-10", "urgency": "high", "content_angle": "warning", "note": "date varies yearly"},
+    {"event": "May Day Holiday", "start": "05-01", "end": "05-05", "urgency": "high", "content_angle": "warning"},
+    {"event": "Autumn Best Weather", "start": "09-15", "end": "11-15", "urgency": "medium", "content_angle": "hack"}
+  ]
+}

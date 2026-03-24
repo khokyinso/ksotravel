@@ -1,0 +1,45 @@
+# Core
+anthropic>=0.25.0
+python-dotenv>=1.0.0
+
+# API + Web server
+fastapi>=0.110.0
+uvicorn>=0.29.0
+httpx>=0.27.0
+requests>=2.31.0
+
+# Scraping (ARM64 native)
+playwright>=1.42.0
+beautifulsoup4>=4.12.0
+
+# Data
+pandas>=2.2.0
+numpy>=1.26.0
+pydantic>=2.6.0
+
+# Video (Railway primary, local fallback)
+moviepy>=1.0.3
+Pillow>=10.2.0
+
+# Database
+supabase>=2.4.0
+
+# Scheduling
+schedule>=1.2.0
+apscheduler>=3.10.0
+tenacity>=8.2.0
+
+# Telegram
+python-telegram-bot>=21.0
+
+# PDFs (DM guides)
+fpdf2>=2.7.0
+
+# Logging
+loguru>=0.7.0
+
+# Google
+google-api-python-client>=2.120.0
+
+# Reddit
+praw>=7.7.0

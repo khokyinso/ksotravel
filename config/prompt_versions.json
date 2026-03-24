@@ -1,0 +1,7 @@
+{
+  "trend_scout": {"version": "v1", "model": "claude-haiku-4-5-20251001", "last_changed": "2026-03-23"},
+  "deal_harvester": {"version": "v1", "model": "claude-haiku-4-5-20251001", "last_changed": "2026-03-23"},
+  "content_strategist": {"version": "v1", "model": "claude-haiku-4-5-20251001", "last_changed": "2026-03-23"},
+  "script_writer": {"version": "v1", "model": "claude-sonnet-4-6", "last_changed": "2026-03-23"},
+  "content_auditor": {"version": "v1", "model": "claude-sonnet-4-6", "last_changed": "2026-03-23"}
+}

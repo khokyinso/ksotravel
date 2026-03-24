@@ -1,0 +1,17 @@
+# Environment
+.env
+.env.save
+venv/
+
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Data (regenerated daily)
+data/
+
+# Logs
+logs/

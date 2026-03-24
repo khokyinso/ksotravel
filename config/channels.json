@@ -1,0 +1,151 @@
+{
+  "channels": [
+    {
+      "destination": "japan",
+      "handle_tiktok": "@kso.japan",
+      "handle_instagram": "@kso.japan",
+      "emoji": "\ud83c\uddef\ud83c\uddf5",
+      "primary_audience": "Americans, Canadians, Australians planning Japan trip",
+      "affiliate_priority": ["klook", "viator", "gyg"],
+      "content_pillars": ["transport", "timing", "food", "accommodation", "attractions", "money"],
+      "brand_color": "#E8272A",
+      "proven_hooks": ["JR Pass warnings", "Golden Week avoidance", "food price hacks"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"]
+    },
+    {
+      "destination": "greece",
+      "handle_tiktok": "@kso.greece",
+      "handle_instagram": "@kso.greece",
+      "emoji": "\ud83c\uddec\ud83c\uddf7",
+      "primary_audience": "Americans, Canadians planning Greek islands trip",
+      "affiliate_priority": ["gyg", "viator", "klook"],
+      "content_pillars": ["island_hopping", "timing", "food", "accommodation", "transport"],
+      "brand_color": "#0D5EAF",
+      "proven_hooks": ["ferry route timing", "Santorini alternatives", "shoulder season"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"]
+    },
+    {
+      "destination": "italy",
+      "handle_tiktok": "@kso.italy",
+      "handle_instagram": "@kso.italy",
+      "emoji": "\ud83c\uddee\ud83c\uddf9",
+      "primary_audience": "Americans, Canadians planning Italy trip",
+      "affiliate_priority": ["viator", "gyg", "booking"],
+      "content_pillars": ["queue_hacks", "food", "transport", "timing", "regions"],
+      "brand_color": "#009246",
+      "proven_hooks": ["Vatican skip-the-line", "lunch vs dinner pricing", "Trenitalia hacks"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"]
+    },
+    {
+      "destination": "korea",
+      "handle_tiktok": "@kso.korea",
+      "handle_instagram": "@kso.korea",
+      "emoji": "\ud83c\uddf0\ud83c\uddf7",
+      "primary_audience": "Americans, Australians \u2014 K-pop fans, beauty enthusiasts, foodies",
+      "affiliate_priority": ["klook", "gyg", "viator"],
+      "content_pillars": ["k_beauty", "food", "transport", "timing", "neighborhoods"],
+      "brand_color": "#00A693",
+      "proven_hooks": ["K-beauty clinics", "Korean BBQ guide", "T-money card"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"]
+    },
+    {
+      "destination": "thailand",
+      "handle_tiktok": "@kso.thailand",
+      "handle_instagram": "@kso.thailand",
+      "emoji": "\ud83c\uddf9\ud83c\udded",
+      "primary_audience": "Americans, Australians, digital nomads",
+      "affiliate_priority": ["gyg", "klook", "viator"],
+      "content_pillars": ["visa", "islands", "timing", "food", "transport"],
+      "brand_color": "#F5C518",
+      "proven_hooks": ["island dupes", "Songkran tips", "street food safety"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"]
+    },
+    {
+      "destination": "mexico",
+      "handle_tiktok": "@kso.mexico",
+      "handle_instagram": "@kso.mexico",
+      "emoji": "\ud83c\uddf2\ud83c\uddfd",
+      "primary_audience": "Americans, Canadians",
+      "affiliate_priority": ["viator", "gyg", "klook"],
+      "content_pillars": ["safety", "cenotes", "food", "timing", "neighborhoods"],
+      "brand_color": "#006847",
+      "proven_hooks": ["cenote booking hacks", "safe neighborhoods", "Oaxaca food"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"]
+    },
+    {
+      "destination": "portugal",
+      "handle_tiktok": "@kso.portugal",
+      "handle_instagram": "@kso.portugal",
+      "emoji": "\ud83c\uddf5\ud83c\uddf9",
+      "primary_audience": "Americans, digital nomads, retirees",
+      "affiliate_priority": ["booking", "gyg", "viator"],
+      "content_pillars": ["visa", "lisbon", "regions", "food", "cost"],
+      "brand_color": "#006600",
+      "proven_hooks": ["digital nomad visa", "Alentejo vs Algarve", "budget hacks"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"]
+    },
+    {
+      "destination": "spain",
+      "handle_tiktok": "@kso.spain",
+      "handle_instagram": "@kso.spain",
+      "emoji": "\ud83c\uddea\ud83c\uddf8",
+      "primary_audience": "Americans, Canadians",
+      "affiliate_priority": ["gyg", "viator", "booking"],
+      "content_pillars": ["queue_hacks", "food", "camino", "timing", "regions"],
+      "brand_color": "#AA151B",
+      "proven_hooks": ["Sagrada Familia booking", "menu del dia hack", "Camino routes"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"]
+    },
+    {
+      "destination": "france",
+      "handle_tiktok": "@kso.france",
+      "handle_instagram": "@kso.france",
+      "emoji": "\ud83c\uddeb\ud83c\uddf7",
+      "primary_audience": "Americans, Canadians",
+      "affiliate_priority": ["gyg", "booking", "viator"],
+      "content_pillars": ["paris_dupes", "accommodation", "queue_hacks", "food", "regions", "transport"],
+      "brand_color": "#002395",
+      "proven_hooks": ["skip central Paris", "Louvre booking", "budget TGV"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"]
+    },
+    {
+      "destination": "turkey",
+      "handle_tiktok": "@kso.turkey",
+      "handle_instagram": "@kso.turkey",
+      "emoji": "\ud83c\uddf9\ud83c\uddf7",
+      "primary_audience": "Americans, Europeans",
+      "affiliate_priority": ["klook", "gyg", "viator"],
+      "content_pillars": ["istanbul", "cappadocia", "hammam", "visa", "food"],
+      "brand_color": "#E30A17",
+      "proven_hooks": ["hammam tourist traps", "Cappadocia balloon booking", "e-visa mistakes"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"],
+      "strict_rules": ["USD_only_pricing", "no_political_content"]
+    },
+    {
+      "destination": "poland",
+      "handle_tiktok": "@kso.poland",
+      "handle_instagram": "@kso.poland",
+      "emoji": "\ud83c\uddf5\ud83c\uddf1",
+      "primary_audience": "Americans of Eastern European descent, budget travelers, history enthusiasts",
+      "affiliate_priority": ["gyg", "booking", "viator"],
+      "content_pillars": ["budget", "krakow", "auschwitz", "warsaw", "food", "transport"],
+      "brand_color": "#DC143C",
+      "proven_hooks": ["Europe best value", "bar mleczny hack", "Krakow nightlife"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"],
+      "strict_rules": ["respectful_auschwitz_content"]
+    },
+    {
+      "destination": "china",
+      "handle_tiktok": "@kso.china",
+      "handle_instagram": "@kso.china",
+      "emoji": "\ud83c\udde8\ud83c\uddf3",
+      "primary_audience": "Western tourists (Americans, Australians, Europeans) planning to visit China",
+      "affiliate_priority": ["viator", "klook", "gyg"],
+      "content_pillars": ["visa", "digital_access", "payments", "transport", "timing", "great_wall", "food"],
+      "brand_color": "#DE2910",
+      "proven_hooks": ["VPN setup before arrival", "Alipay foreigner setup", "visa mistakes"],
+      "posting_slots_est": ["07:00", "09:30", "12:00", "14:30", "17:00", "19:00", "20:30", "22:00"],
+      "strict_rules": ["no_political_content", "vpn_tourist_framing_only", "daily_visa_verification", "verify_wechat_alipay_access"]
+    }
+  ]
+}

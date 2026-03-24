@@ -1,0 +1,113 @@
+{
+  "universal": {
+    "max_same_category_per_channel_per_day": 3,
+    "min_warning_or_hack_hooks_per_channel_per_day": 2,
+    "min_affiliate_deals_per_channel_per_day": 1,
+    "topic_dedup_window_days": 60,
+    "max_line_words": 8,
+    "promo_code": "KSOTRAVEL",
+    "price_staleness_max_days": 30,
+    "videos_per_channel_per_day": 8,
+    "total_videos_per_day": 96,
+    "max_same_format_per_channel_per_day": 4
+  },
+  "trend_source_priority": [
+    {"source": "tiktok_creative_center", "priority": 1, "description": "Trending hashtags, sounds from TikTok Creative Center"},
+    {"source": "tiktok_search", "priority": 2, "description": "TikTok search autocomplete — what users are actively searching"},
+    {"source": "competitor_content", "priority": 3, "description": "Competitor accounts with outsized engagement"},
+    {"source": "instagram_top_post", "priority": 4, "description": "Instagram Reels hashtag top posts — confirmation signal"},
+    {"source": "reddit_hot", "priority": 5, "description": "Reddit discussion-based trends"},
+    {"source": "google_trends", "priority": 6, "description": "Google search validation — secondary/demoted"},
+    {"source": "seasonal", "priority": 7, "description": "Seasonal calendar — always-on baseline"}
+  ],
+  "video_formats": [
+    {"id": "green_screen_text", "description": "Text overlay on stock footage (KSO default)", "best_for": ["warning", "hack", "secret"]},
+    {"id": "pov_walking", "description": "POV walking tour / first person", "best_for": ["story", "reaction"]},
+    {"id": "split_screen", "description": "Side-by-side comparison", "best_for": ["comparison"]},
+    {"id": "photo_slideshow", "description": "Photo slideshow with voiceover", "best_for": ["listicle", "hack"]},
+    {"id": "series_part", "description": "Part 1/2/3 series hook", "best_for": ["listicle", "story"]},
+    {"id": "stitch_reaction", "description": "Stitch/duet reaction to another creator", "best_for": ["reaction", "warning"]},
+    {"id": "map_zoom", "description": "Map zoom-in transition to location", "best_for": ["timing", "secret"]},
+    {"id": "before_after", "description": "Expectation vs reality reveal", "best_for": ["comparison", "reaction"]},
+    {"id": "countdown_list", "description": "Countdown listicle (5, 4, 3, 2, 1)", "best_for": ["listicle"]},
+    {"id": "storytime", "description": "Personal story with text captions", "best_for": ["story"]}
+  ],
+  "hook_blacklist": [
+    "If you are traveling to",
+    "Here are some tips for",
+    "In this video I will show you",
+    "Today I want to talk about",
+    "Hey guys! Today we're going to",
+    "I just wanted to share",
+    "So I recently went to"
+  ],
+  "hook_angles_ranked": [
+    "warning",
+    "hack",
+    "secret",
+    "timing",
+    "comparison",
+    "listicle",
+    "story",
+    "reaction"
+  ],
+  "proven_hook_patterns": [
+    "Stop wasting money on {X} in {destination}",
+    "Most tourists make this mistake in {destination}",
+    "Don't visit {destination} without knowing this",
+    "I saved ${amount} by doing this instead",
+    "Never book {X} before checking {Y}",
+    "{Destination} locals never tell tourists this",
+    "Avoid {destination} during {X} \u2014 here's why",
+    "${price} is too much for {X} in {destination}"
+  ],
+  "video_length_rules": {
+    "single_tip_warning": {"seconds": 15, "lines": 5},
+    "tip_context_deal": {"seconds": 30, "lines": 7},
+    "comparison": {"seconds": 45, "lines": 10},
+    "listicle_story": {"seconds": 60, "lines": 10}
+  },
+  "cta_templates": [
+    "Comment {PHRASE} and I'll send you the full guide",
+    "Drop {PHRASE} below for the complete breakdown",
+    "Type {PHRASE} in comments \u2014 I'll DM you the link",
+    "Comment {PHRASE} for my free {destination} guide"
+  ],
+  "deal_categories": [
+    "transport",
+    "attraction",
+    "food_tour",
+    "accommodation",
+    "experience",
+    "day_trip",
+    "guided_tour"
+  ],
+  "affiliate_platforms": {
+    "klook": {"commission_pct_range": [5, 8], "cookie_days": 30},
+    "gyg": {"commission_pct_range": [8, 8], "cookie_days": 30},
+    "viator": {"commission_pct_range": [8, 8], "cookie_days": 30},
+    "booking": {"commission_pct_range": [4, 6], "cookie_days": 0, "note": "session cookie only"},
+    "expedia": {"commission_pct_range": [2, 6], "cookie_days": 7}
+  },
+  "destination_specific": {
+    "china": {
+      "min_visa_entry_tips_per_day": 1,
+      "requires_daily_visa_verification": true,
+      "no_political_content": true,
+      "vpn_tourist_framing_only": true,
+      "verify_wechat_alipay_access": true
+    },
+    "france": {
+      "min_underrated_vs_overtouristed_per_day": 1
+    },
+    "turkey": {
+      "min_underrated_vs_overtouristed_per_day": 1,
+      "usd_only_pricing": true,
+      "no_political_content": true
+    },
+    "poland": {
+      "min_underrated_vs_overtouristed_per_day": 1,
+      "respectful_auschwitz_content": true
+    }
+  }
+}
