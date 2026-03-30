@@ -41,6 +41,8 @@ STANDARD CHECKLIST:
 1. Line 1 is a series title or topic label (NOT a hook — titles like "Japan Travel Tip #3" are correct)
 2. Line count is within ±2 of target (15s=4, 30s=5, 45s=6, 60s=7). DO NOT use old targets like 7 or 10 — those are outdated.
 3. No line exceeds 15 words (short punchy blocks for phone screen)
+3b. Each line (except title) has at least 5 words (blocks must have enough substance — no 1-2 word lines)
+3c. Total script word count meets minimum: 15s=20 words, 30s=40 words, 45s=60 words, 60s=80 words
 4. Trigger phrase appears somewhere in the script
 5. Script includes a CTA (comment prompt or follow prompt)
 6. Real USD prices or specific numbers included (not vague)
