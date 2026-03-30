@@ -34,26 +34,51 @@ CTA_TEMPLATES = {
     "D": 'Comment {phrase} for my free {destination} guide',
 }
 
-SYSTEM_PROMPT = """You write TikTok/Reels scripts for @insearchofkso travel channels.
-Voice: confident, specific, direct, urgent. First-person preferred.
+SYSTEM_PROMPT = """You write TikTok/Reels scripts for @kso.travel channels.
 
-RULES:
-- Every line ≤ 8 words
-- Always include real USD prices
-- Always include real product/place names
-- Always include promo code KSOTRAVEL
-- NEVER start: "If you are traveling to..."
-- NEVER use vague language ("some", "many", "often")
-- Second-to-last line = comment CTA with provided trigger phrase
-- Last line = affiliate platform + KSOTRAVEL
+VOICE & TONE:
+You are a helpful friend who has personally traveled to every destination. You speak conversationally,
+in second person ("If you're planning to...") mixed with first person experience ("My step count was...").
+You give real, specific, practical advice — not generic travel guide fluff.
 
-PROVEN HOOK STARTERS:
-"Stop wasting money on [X] in [destination]"
-"Most tourists make this mistake in [destination]"
-"Don't visit [destination] without knowing this"
-"I saved $X by doing this instead"
-"Never book [X] before checking [Y]"
-"[Destination] locals never tell tourists this"
+SCRIPT STRUCTURE (this order matters):
+1. TITLE: Just the series title, nothing else. e.g. "Japan Travel Tip #33"
+2. HOOK: Relatable "If you're..." statement. One sentence only.
+3. KEY FACTS: 2-3 short punchy blocks. One idea per block. Numbers get their own block.
+4. CTA: "If this is helpful, make sure to follow for more tips."
+
+WRITING RULES:
+- Each script_line = MAX 15 words. This is 1-2 lines on a phone screen.
+- ONE idea per block. If you have two ideas, make two blocks.
+- Key numbers/dates deserve their own block for impact.
+- Be conversational — "you", "your", contractions ("don't", "you're")
+- Include real USD prices, real dates, real product/place names
+- NEVER use vague language ("some", "many", "often", "various")
+- 15s video = 4-5 blocks. 30s video = 5-6 blocks. 45-60s video = 6-8 blocks.
+
+EXAMPLES OF CORRECT SCRIPT_LINES:
+["Japan Travel Tip #33",
+ "If you're planning to come to Japan in 2024, make sure to avoid Golden Week.",
+ "This year it's 4/29-5/5.",
+ "Everybody in Japan's off. Every line will be wayyy longer.",
+ "If you're visiting Japan this year, follow for more tips."]
+
+["Japan Travel Tips #9",
+ "If you want to go to Shibuya Sky for sunset, make sure to go 1.5 hours before.",
+ "Pro tip — there's a sky bar so you can enjoy a drink while waiting.",
+ "Buy your tickets online so you don't have to go through long queues.",
+ "If you are traveling to Japan, my profile will keep providing tips."]
+
+BAD — TOO LONG (never do this):
+"The 7-day JR Pass costs $317 USD right now. That sounds like a deal until you actually map out your itinerary and realize you might not even use $317 worth of trains."
+
+PROVEN HOOK OPENERS (use these patterns):
+"If you're planning to come to {destination} in 2024..."
+"If you're traveling to {destination} and thinking about getting a {X} — don't."
+"If you are visiting {destination}, make sure to {X}"
+"Don't buy a {X} if you're just going to {destination} for a week!"
+"{Destination} Travel Tip #{N}: Make sure to {X}"
+"Day {N} of helping you plan your trip to {destination}"
 
 DESTINATION NOTES:
 - China: mention visa type / VPN / payment when relevant
@@ -96,13 +121,15 @@ async def _write_script(brief: dict, cta_winner: str) -> dict:
     trigger = brief.get("comment_trigger_phrase", "INFO")
     video_format = brief.get("video_format", "green_screen_text")
 
-    # Determine line count
+    # Determine block count (matching system prompt rules)
     if length == 15:
-        line_count = 5
+        line_count = 4
     elif length == 30:
-        line_count = 7
+        line_count = 5
+    elif length == 45:
+        line_count = 6
     else:
-        line_count = 10
+        line_count = 7
 
     # Build CTA line
     cta_template = CTA_TEMPLATES.get(cta_winner, CTA_TEMPLATES["A"])
@@ -119,6 +146,10 @@ DEAL TO FEATURE:
 - Price: ${deal.get('price_usd', 'N/A')}
 - Promo code: KSOTRAVEL"""
 
+    # Get series number from brief
+    series_num = brief.get("series_number", "")
+    series_title = f"{destination.title()} Travel Tip #{series_num}" if series_num else ""
+
     prompt = f"""Write a {length}-second TikTok/Reels script for @kso.{destination}.
 
 BRIEF:
@@ -128,32 +159,22 @@ BRIEF:
 - Category: {brief.get('content_category', '')}
 - Video format: {video_format}
 - Trigger phrase: {trigger}
+{"- Series title: " + series_title if series_title else ""}
 {deal_text}
 
 SCRIPT REQUIREMENTS:
-- Exactly {line_count} lines
-- Line 1: Hook (use or adapt the hook_text above, ≤8 words)
-- {"Lines 2-3: Tip with specific detail" if length == 15 else "Lines 2-" + str(line_count - 2) + ": Tips, context, details"}
-- Line {line_count - 1}: "{cta_line}"
-- Line {line_count}: Platform name + "use code KSOTRAVEL"
-- Every line ≤ 8 words
-- Include real USD prices
-- Include real place/product names
+- Write exactly {line_count} script_lines
+- Each line is MAX 15 words. One idea per line. Short and punchy.
+- Line 1: Series title only (e.g. "{series_title}" or "{destination.title()} Travel Tip")
+- Line 2: Relatable hook — "If you're planning to..." or "If you're traveling to..."
+- Middle lines: Key facts, tips, prices. One fact per line. Numbers get their own line.
+- Last line: Soft CTA — "Follow for more {destination.title()} tips" or "Comment {trigger} for the full guide"
 
-VIDEO FORMAT NOTES ({video_format}):
-{"- Text overlay on stock footage, each line appears as a card" if video_format == "green_screen_text" else ""}
-{"- POV walking perspective, describe what viewer sees" if video_format == "pov_walking" else ""}
-{"- Side-by-side comparison, alternate between two options" if video_format == "split_screen" else ""}
-{"- Photo slideshow with voiceover narration style" if video_format == "photo_slideshow" else ""}
-{"- Part of a series, hint at next part" if video_format == "series_part" else ""}
-{"- Reaction to common tourist mistake or viral clip" if video_format == "stitch_reaction" else ""}
-{"- Map zoom-in transition to specific location" if video_format == "map_zoom" else ""}
-{"- Before/after or expectation vs reality reveal" if video_format == "before_after" else ""}
-{"- Countdown listicle (5, 4, 3, 2, 1)" if video_format == "countdown_list" else ""}
-{"- Personal story with text captions" if video_format == "storytime" else ""}
+CRITICAL: Each script_line must be MAX 15 words. Not 20, not 25 — fifteen or fewer.
+Example: "If you're planning to come to Japan in 2024, make sure to avoid visiting during Japan's Golden Week. This year it's 4/29-5/5. This is a week where everybody in Japan's off. Every line in Japan will be wayyy longer."
 
 Also generate:
-- caption: ≤150 chars before hashtags, compelling, includes trigger phrase mention
+- caption: ≤150 chars before hashtags, compelling, conversational
 - hashtags: 4-6 relevant hashtags
 - geotag: specific location name
 
@@ -198,29 +219,31 @@ def _validate_script(script: dict, brief: dict) -> dict:
     length = brief.get("target_length_seconds", 30)
     trigger = brief.get("comment_trigger_phrase", "")
 
-    expected_lines = {15: 5, 30: 7, 45: 10, 60: 10}.get(length, 7)
+    expected_lines = {15: 4, 30: 5, 45: 6, 60: 7}.get(length, 5)
 
     issues = []
 
-    # Check line count
-    if len(lines) != expected_lines:
-        issues.append(f"Expected {expected_lines} lines, got {len(lines)}")
+    # Check line count (allow ±2 flexibility)
+    if abs(len(lines) - expected_lines) > 2:
+        issues.append(f"Expected ~{expected_lines} lines, got {len(lines)}")
 
-    # Check line length (≤8 words)
+    # Check block length (≤15 words — short punchy blocks matching KSO style)
     for i, line in enumerate(lines):
         word_count = len(line.split())
-        if word_count > 10:  # Allow slight flexibility
-            issues.append(f"Line {i+1} has {word_count} words (max ~8)")
+        if word_count > 15:
+            issues.append(f"Block {i+1} has {word_count} words (max 15)")
 
     # Check trigger phrase present
     trigger_found = any(trigger.lower() in line.lower() for line in lines)
     if not trigger_found and trigger:
         issues.append(f"Trigger phrase '{trigger}' not found in script")
 
-    # Check KSOTRAVEL present
-    kso_found = any("KSOTRAVEL" in line.upper() for line in lines)
-    if not kso_found:
-        issues.append("KSOTRAVEL promo code not found")
+    # Check KSOTRAVEL present (only if brief has a deal)
+    has_deal = brief.get("deal") is not None
+    if has_deal:
+        kso_found = any("KSOTRAVEL" in line.upper() for line in lines)
+        if not kso_found:
+            issues.append("KSOTRAVEL promo code not found (brief has deal)")
 
     script["validation_issues"] = issues
     script["is_valid"] = len(issues) == 0

@@ -101,18 +101,28 @@ async def fetch_pexels_footage(
     destination: str, duration_hint: int, tmp_dir: str
 ) -> str | None:
     """Fetch portrait video from Pexels for a destination. Returns local path."""
+    import sys
+
+    class _Log:
+        def info(self, msg): print(f"[PEXELS] {msg}", flush=True)
+        def warning(self, msg): print(f"[PEXELS] WARN: {msg}", flush=True)
+        def error(self, msg): print(f"[PEXELS] ERROR: {msg}", flush=True)
+    log = _Log()
+
     # Check cache
     cache_key = destination
     if cache_key in _footage_cache and Path(_footage_cache[cache_key]).exists():
+        log.info(f"[{destination}] Using cached footage")
         return _footage_cache[cache_key]
 
     api_key = os.getenv("PEXELS_API_KEY")
     if not api_key:
+        log.error(f"[{destination}] PEXELS_API_KEY not set")
         return None
 
     tags = FOOTAGE_TAGS.get(destination, f"{destination} travel")
-    # Pick first tag for search
     query = tags.split(",")[0].strip()
+    log.info(f"[{destination}] Searching Pexels for: '{query}'")
 
     async with httpx.AsyncClient(timeout=30) as client:
         try:
@@ -128,20 +138,26 @@ async def fetch_pexels_footage(
             )
             resp.raise_for_status()
             data = resp.json()
-        except Exception:
+            log.info(f"[{destination}] Pexels API returned {len(data.get('videos', []))} videos")
+        except Exception as e:
+            log.error(f"[{destination}] Pexels API search failed: {e}")
             return None
 
     videos = data.get("videos", [])
     if not videos:
+        log.warning(f"[{destination}] No videos found for '{query}'")
         return None
 
-    # Pick a video with sufficient duration
     import random
     random.shuffle(videos)
 
-    for video in videos:
+    for i, video in enumerate(videos):
         files = video.get("video_files", [])
-        # Use SD quality for faster download + encode (720p is fine for TikTok/Reels)
+        log.info(f"[{destination}] Video {i+1}: {len(files)} files available")
+        for f in files:
+            log.info(f"  {f.get('width')}x{f.get('height')} quality={f.get('quality')}")
+
+        # Use SD quality for faster download + encode
         sd_files = [
             f for f in files
             if 720 <= f.get("height", 0) <= 1080 and f.get("width", 0) <= f.get("height", 0)
@@ -150,28 +166,38 @@ async def fetch_pexels_footage(
             sd_files = [f for f in files if f.get("height", 0) >= 480]
         if not sd_files:
             sd_files = files
-        hd_files = sd_files
 
-        if not hd_files:
+        if not sd_files:
+            log.warning(f"[{destination}] Video {i+1}: no suitable files after filtering")
             continue
 
-        download_url = hd_files[0].get("link")
+        chosen = sd_files[0]
+        download_url = chosen.get("link")
         if not download_url:
+            log.warning(f"[{destination}] Video {i+1}: no download link")
             continue
 
-        # Download
+        log.info(f"[{destination}] Downloading {chosen.get('width')}x{chosen.get('height')} from {download_url[:80]}...")
+
         footage_path = os.path.join(tmp_dir, f"{destination}_footage.mp4")
         try:
-            async with httpx.AsyncClient(timeout=60, follow_redirects=True) as dl_client:
-                dl_resp = await dl_client.get(download_url)
-                dl_resp.raise_for_status()
-                with open(footage_path, "wb") as f:
-                    f.write(dl_resp.content)
+            async with httpx.AsyncClient(timeout=120, follow_redirects=True) as dl_client:
+                async with dl_client.stream("GET", download_url) as dl_resp:
+                    dl_resp.raise_for_status()
+                    total = 0
+                    with open(footage_path, "wb") as f:
+                        async for chunk in dl_resp.aiter_bytes(chunk_size=65536):
+                            f.write(chunk)
+                            total += len(chunk)
+            file_size_mb = total / (1024 * 1024)
+            log.info(f"[{destination}] Downloaded {file_size_mb:.1f} MB to {footage_path}")
             _footage_cache[cache_key] = footage_path
             return footage_path
-        except Exception:
+        except Exception as e:
+            log.error(f"[{destination}] Download failed: {e}")
             continue
 
+    log.error(f"[{destination}] All video download attempts failed")
     return None
 
 
@@ -383,15 +409,19 @@ async def render_single(
     async with RENDER_SEMAPHORE:
         try:
             # Fetch footage
+            print(f"[RENDER] {script.brief_id}: fetching footage...", flush=True)
             footage_path = await fetch_pexels_footage(
                 script.destination, script.target_length_seconds, tmp_dir
             )
+            print(f"[RENDER] {script.brief_id}: footage={'OK: ' + str(footage_path) if footage_path else 'NONE (black bg)'}", flush=True)
 
             # Compose video
+            print(f"[RENDER] {script.brief_id}: composing video ({script.target_length_seconds}s, {len(script.script_lines)} lines)...", flush=True)
             output_path = os.path.join(tmp_dir, f"{script.brief_id}.mp4")
             success = await asyncio.to_thread(
                 compose_video, script, footage_path, output_path
             )
+            print(f"[RENDER] {script.brief_id}: compose={'OK' if success else 'FAILED'}", flush=True)
 
             if not success:
                 return {"brief_id": script.brief_id, "error": "Composition failed"}

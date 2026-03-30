@@ -19,6 +19,8 @@ import anthropic
 from dotenv import load_dotenv
 from loguru import logger
 
+from agents.format_scanner import get_format_recommendations
+
 from utils import supabase_client as db
 from utils.duplicate_checker import filter_duplicates, get_recent_topics
 from config.constants import DESTINATIONS
@@ -275,14 +277,21 @@ def _validate_briefs(
         if b.get("target_length_seconds") not in (15, 30, 45, 60):
             b["target_length_seconds"] = 30
 
-        # Validate video format
+        # Assign optimal video format using format scanner recommendations
         valid_formats = [
             "green_screen_text", "pov_walking", "split_screen", "photo_slideshow",
             "series_part", "stitch_reaction", "map_zoom", "before_after",
-            "countdown_list", "storytime",
+            "countdown_list", "storytime", "tier_list",
         ]
         if b.get("video_format") not in valid_formats:
-            b["video_format"] = "green_screen_text"
+            # Use format scanner to pick the best format for this content
+            recs = get_format_recommendations(
+                content_category=b.get("content_category", "experience"),
+                destination=destination,
+                hook_angle=b.get("hook_angle", "hack"),
+            )
+            b["video_format"] = recs[0]["format"] if recs else "green_screen_text"
+            b["remotion_template"] = recs[0]["remotion_template"] if recs else "GreenScreenText"
 
         # Validate trigger phrase uniqueness
         trigger = b.get("comment_trigger_phrase", "").upper().strip()
@@ -355,6 +364,21 @@ async def strategize_destination(
 
     # Filter duplicates against published history
     briefs = filter_duplicates(briefs, destination, topic_key="topic")
+
+    # Assign series numbers — serialized tips get a number, listicles/standalone don't
+    try:
+        series_numbers = db.get_next_series_numbers(destination, count=len(briefs))
+        for i, brief in enumerate(briefs):
+            # Listicles and standalone content don't get series numbers
+            hook = brief.get("hook_angle", "")
+            if hook in ("listicle", "story", "reaction"):
+                brief["series_number"] = None
+                brief["series_type"] = "standalone"
+            else:
+                brief["series_number"] = series_numbers[i]
+                brief["series_type"] = "travel_tip"
+    except Exception as e:
+        logger.warning(f"Failed to assign series numbers for {destination}: {e}")
 
     logger.info(f"Generated {len(briefs)} validated briefs for {destination}")
     return briefs

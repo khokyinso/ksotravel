@@ -388,6 +388,48 @@ def save_visual_qa_results(results: list[dict], run_date: date) -> int:
     return len(rows)
 
 
+# ── Series Counters ─────────────────────────────────────────────────────
+
+
+def get_next_series_numbers(destination: str, count: int = 8) -> list[int]:
+    """Get next N series numbers for a destination and increment the counter.
+    Returns list of sequential numbers (e.g. [36, 37, 38, ...])."""
+    try:
+        result = (
+            client()
+            .table("series_counters")
+            .select("current_number")
+            .eq("destination", destination)
+            .eq("series_type", "travel_tip")
+            .execute()
+        )
+        if result.data:
+            current = result.data[0]["current_number"]
+        else:
+            current = 0
+            # Initialize if missing
+            client().table("series_counters").insert({
+                "destination": destination,
+                "series_type": "travel_tip",
+                "current_number": 0,
+            }).execute()
+
+        # Generate next numbers
+        numbers = list(range(current + 1, current + count + 1))
+
+        # Update counter to new max
+        client().table("series_counters").update({
+            "current_number": numbers[-1],
+            "updated_at": datetime.utcnow().isoformat(),
+        }).eq("destination", destination).eq("series_type", "travel_tip").execute()
+
+        logger.info(f"Series counter for {destination}: {current} -> {numbers[-1]}")
+        return numbers
+    except Exception as e:
+        logger.warning(f"Series counter failed for {destination}: {e}")
+        return list(range(1, count + 1))
+
+
 def approve_channel_videos(destination: str, run_date: date) -> int:
     """Mark all rendered videos for a destination as approved."""
     result = (

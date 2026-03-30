@@ -50,18 +50,9 @@ async def run_phase3(
             logger.info("Run Phase 2 first: python -m orchestrator.run_phase2")
             return _finalize({"error": f"Missing {f.name}"}, run_date, start_time)
 
-    # Step 1: Check Railway health
-    logger.info("Step 1: Checking Railway service health...")
+    # Step 1: Render videos locally on Mac
+    logger.info("Step 1: Rendering videos locally on Mac...")
     from agents import video_builder
-    is_healthy = await video_builder.check_railway_health()
-
-    if not is_healthy:
-        logger.error("Railway service is not available — cannot render videos")
-        logger.info("Set RAILWAY_VIDEO_SERVICE_URL in .env and deploy the service")
-        return _finalize({"error": "Railway service unavailable"}, run_date, start_time)
-
-    # Step 2: Render videos
-    logger.info("Step 2: Rendering videos via Railway...")
     render_result = await video_builder.build_videos(run_date)
     results["video_builder"] = render_result
 

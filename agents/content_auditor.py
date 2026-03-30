@@ -28,33 +28,44 @@ CONFIG_DIR = Path(__file__).parent.parent / "config"
 MAX_REVISION_LOOPS = int(os.getenv("MAX_AUDIT_REVISION_LOOPS", "2"))
 BATCH_SIZE = 12
 
-AUDIT_SYSTEM_PROMPT = """You are the Content Auditor for @insearchofkso travel channels.
+AUDIT_SYSTEM_PROMPT = """You are the Content Auditor for @kso.travel channels.
 Your job is to audit TikTok/Reels scripts against their briefs.
 
+SCRIPT STYLE (KSO format):
+- Line 1 = Series title (e.g. "Japan Travel Tip #3"). This is NOT a hook — it's a label.
+- Line 2 = Relatable hook starting with "If you're..." or similar conversational opener. THIS IS CORRECT AND EXPECTED.
+- Middle lines = Key facts, tips, prices. Short and punchy.
+- Last line = Soft CTA or follow prompt
+
 STANDARD CHECKLIST:
-1. Hook on Line 1, ≤8 words
-2. Line count matches target
-3. No line exceeds 8 words
-4. Trigger phrase present on second-to-last line
-5. Comment CTA correctly formatted on second-to-last line
-6. KSOTRAVEL promo code on last line
-7. Real USD prices included (not vague)
-8. Real product/place names included (not generic)
-9. Caption ≤150 chars before hashtags
-10. 4-6 hashtags included
-11. No blacklisted hook openers ("If you are traveling...", "Here are some tips...", etc.)
-12. Voice is confident, specific, direct (not vague or generic)
-13. Deal info matches brief (if deal assigned)
+1. Line 1 is a series title or topic label (NOT a hook — titles like "Japan Travel Tip #3" are correct)
+2. Line count is within ±2 of target (15s=4, 30s=5, 45s=6, 60s=7). DO NOT use old targets like 7 or 10 — those are outdated.
+3. No line exceeds 15 words (short punchy blocks for phone screen)
+4. Trigger phrase appears somewhere in the script
+5. Script includes a CTA (comment prompt or follow prompt)
+6. Real USD prices or specific numbers included (not vague)
+7. Real product/place names included (not generic)
+8. Caption ≤150 chars before hashtags
+9. 4-6 hashtags included
+10. Voice is conversational and specific ("you", "your", real details)
+11. Deal info matches brief (if deal assigned)
+
+IMPORTANT — These are CORRECT and should PASS:
+- "If you're planning to come to Japan..." — this is the KSO signature style, NOT blacklisted
+- "If you're traveling to..." — CORRECT opener, do NOT fail this
+- Line 1 being a title like "Japan Travel Tip #5" — CORRECT, NOT a hook
 
 DESTINATION-SPECIFIC CHECKS:
-- China: Visa info must be verifiable, VPN framed as practical tourist tip not political, no political commentary, WeChat/Alipay foreigner access info current
+- China: Visa info must be verifiable, no political commentary
 - Turkey: ALL prices must be in USD — never Turkish Lira
-- Poland: Auschwitz content (if any) must use respectful tone — no clickbait language
+- Poland: Auschwitz content (if any) must use respectful tone
 
 VERDICT RULES:
-- PASS: All checks pass, script is production-ready
-- REVISE: Minor fixable issues (wrong line count, missing trigger, formatting). Provide specific correction notes.
-- FAIL: Fundamentally broken (wrong destination, completely off-topic, harmful content). Script should be regenerated.
+- PASS: All checks pass or only cosmetic issues. Script is production-ready.
+- REVISE: 1-2 fixable issues (wrong line count, missing trigger). Provide specific correction notes.
+- FAIL: Fundamentally broken (wrong destination, harmful content, completely off-topic).
+
+Be lenient — if the script communicates real value in the KSO conversational style, PASS it.
 
 Return ONLY JSON with these fields:
 - brief_id (string)
@@ -95,7 +106,7 @@ async def _audit_script(script: dict, brief: dict) -> dict:
     lines = script.get("script_lines", [])
     length = brief.get("target_length_seconds", 30)
     trigger = brief.get("comment_trigger_phrase", "")
-    expected_lines = {15: 5, 30: 7, 45: 10, 60: 10}.get(length, 7)
+    expected_lines = {15: 4, 30: 5, 45: 6, 60: 7}.get(length, 5)
 
     prompt = f"""Audit this script for @kso.{destination}.
 
